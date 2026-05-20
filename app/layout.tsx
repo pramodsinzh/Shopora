@@ -1,11 +1,12 @@
-import type { Metadata } from "next"; 
+import type { Metadata } from "next";
 import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ClerkProvider } from "@clerk/nextjs";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: "Shopora",
@@ -18,12 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)} >
-      <body className="font-poppins antialiased">
-        <Header />
-        {children}
-        <Footer />
+    <ClerkProvider>
+      <html lang="en" className={cn("font-sans", geist.variable)} >
+        <body className="font-poppins antialiased">
+          <Header />
+          {children}
+          <Footer />
         </body>
-    </html>
+      </html>
+    </ClerkProvider>
   );
 }
