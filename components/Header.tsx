@@ -11,8 +11,7 @@ import { currentUser } from '@clerk/nextjs/server'
 import { ClerkLoaded, UserButton } from '@clerk/nextjs'
 
 const Header = async () => {
-  const user = await currentUser()
-  console.log(user)
+  const user = await currentUser() 
   return (
     <header className='bg-white py-5'>
       <Container className='flex items-center justify-between text-lightColor'>
