@@ -4,6 +4,7 @@ import { addressType } from './addressType'
 import { authorType } from './authorType'
 import { blockContentType } from './blockContentType'
 import { blogCategoryType } from './blogCategoryType'
+import { blogType } from './blogType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -12,5 +13,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     authorType,
     blockContentType,
     blogCategoryType,
+    blogType,
   ],
 }
