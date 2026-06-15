@@ -7,6 +7,7 @@ import { blogCategoryType } from './blogCategoryType'
 import { blogType } from './blogType'
 import { brandType } from './brandType'
 import { productType } from './productType'
+import { orderType } from './orderType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -18,5 +19,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     blogType,
     brandType,
     productType,
+    orderType
   ],
 }
