@@ -1,0 +1,5 @@
+[
+  { "_type": "category", "title": "Apparel", "slug": "apparel" },
+  { "_type": "category", "title": "Accessories", "slug": "accessories" },
+  { "_type": "category", "title": "Electronics", "slug": "electronics" }
+]

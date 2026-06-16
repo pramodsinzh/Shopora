@@ -10,7 +10,7 @@ export const quickLinksData = [
     { title: "About Us", href: "/about" },
     { title: "Contact Us", href: "/contact" },
     { title: "Privacy Policy", href: "/privacy" },
-    { title: "Terms & Conditions", href: "/terms" }, 
+    { title: "Terms & Conditions", href: "/terms" },
     { title: "FAQs", href: "/faqs" },
     { title: "Help", href: "/help" },
 ];
@@ -23,4 +23,11 @@ export const categoriesData = [
     { title: "Washing Machine", href: "/washing-machine" },
     { title: "Kitchen Appliances", href: "/kitchen-appliances" },
     { title: "Gadget accessories", href: "/gadget-accessories" },
+];
+
+export const productType = [
+    { title: "Gadget", value: "gadget" },
+    { title: "Appliances", value: "appliances" },
+    { title: "Refrigerators", value: "refrigerators" },
+    { title: "Others", value: "others" },
 ]

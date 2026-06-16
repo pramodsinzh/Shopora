@@ -1,0 +1,26 @@
+[
+  {
+    "_type": "user",
+    "name": "Alice Doe",
+    "email": "alice@example.com",
+    "role": "customer",
+    "address": {
+      "line1": "123 Main St",
+      "city": "Springfield",
+      "country": "US",
+      "postalCode": "90210"
+    }
+  },
+  {
+    "_type": "user",
+    "name": "Bob Smith",
+    "email": "bob@example.com",
+    "role": "customer",
+    "address": {
+      "line1": "456 Market Ave",
+      "city": "Metropolis",
+      "country": "US",
+      "postalCode": "10001"
+    }
+  }
+]
