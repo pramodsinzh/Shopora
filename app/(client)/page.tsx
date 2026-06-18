@@ -4,7 +4,7 @@ import ProductGrid from '@/components/ProductGrid'
 
 const Home = () => {
   return (
-    <Container className='bg-shop_light_pink'>
+    <Container >
       <HomeBanner />
       <div className="py-10">
         <ProductGrid />
