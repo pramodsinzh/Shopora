@@ -12,7 +12,7 @@ interface Props {
 
 const AddToCartButton = ({ product, className }: Props) => {
   const isOutOfStock = product?.stock === 0
-  const handleAddToCart = () =>{
+  const handleAddToCart = () => {
     window.alert("Added to cart")
   }
   return (
