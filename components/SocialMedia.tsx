@@ -25,7 +25,7 @@ const socialLink = [
         title: "Facebook",
         href: "#",
         icon: <BaggageClaimIcon className='w-5 h-5' />
-    },
+    }, 
 ]
 
 const SocialMedia = ({ className, iconClassName, tooltipClassName }: Props) => {
