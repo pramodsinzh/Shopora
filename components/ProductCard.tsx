@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import AddToWishListButton from './AddToWishListButton'
-import { Title } from './ui/text'
+import { SubTitle } from './ui/text'
 import PriceView from './PriceView'
 import AddToCartButton from './AddToCartButton'
 
@@ -45,7 +45,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                 {product?.categories && (
                     <p className='uppercase line-clamp-1 text-xs text-shop_light_text'>{product?.categories?.map((cat) => cat).join(", ")}</p>
                 )}
-                <Title className="text-sm line-clamp-1">{product?.name}</Title>
+                <SubTitle className="text-lg line-clamp-1">{product?.name}</SubTitle>
                 <div className="flex items-center gap-2">
                     <div className="flex items-center gap-0.5">
                         {[...Array(5)].map((_, index) => (
