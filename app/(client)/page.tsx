@@ -5,6 +5,7 @@ import ProductGrid from '@/components/ProductGrid'
 import ShopByBrands from '@/components/ShopByBrands'
 import { getCategories } from '@/sanity/queries'
 import { Category } from '@/sanity.types'
+import LatestBlog from '@/components/LatestBlog'
 
 type CategoryWithCount = Category & { productCount: number }
 
@@ -16,6 +17,7 @@ const Home = async() => {
       <ProductGrid />
       <HomeCategories categories={categories} />
       <ShopByBrands />
+      <LatestBlog />
     </Container>
   )
 }

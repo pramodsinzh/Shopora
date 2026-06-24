@@ -456,10 +456,38 @@ export type BRANDS_QUERY_RESULT = Array<{
   };
 }>;
 
+// Source: sanity/queries/query.ts
+// Variable: LATEST_BLOG_QUERY
+// Query: *[_type == "blog" && isLatest == true] | order(name asc){    ...,    blogcategories[]->{title}    }
+export type LATEST_BLOG_QUERY_RESULT = Array<{
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  author?: AuthorReference;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  blogcategories: Array<{
+    title: string | null;
+  }> | null;
+  publishedAt?: string;
+  isLatest: true;
+  body?: BlockContent;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "brand"] | order(name asc)': BRANDS_QUERY_RESULT;
+    '*[_type == "blog" && isLatest == true] | order(name asc){\n    ...,\n    blogcategories[]->{title}\n    } ': LATEST_BLOG_QUERY_RESULT;
   }
 }
