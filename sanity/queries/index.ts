@@ -17,7 +17,7 @@ const getCategories = async (quantity?: number) => {
         return data;
 
     } catch (error) {
-        console.log("Error fetching categories", error)
+        console.error("Error fetching categories", error)
         return []
     }
 }
@@ -27,7 +27,7 @@ const getAllBrands = async () => {
         const { data } = await sanityFetch({ query: BRANDS_QUERY })
         return data ?? [];
     } catch (error) {
-        console.log("Error fetching all brands", error)
+        console.error("Error fetching all brands", error)
         return [];
     }
 }
@@ -36,7 +36,7 @@ const getLatestBlogs = async () => {
         const { data } = await sanityFetch({ query: LATEST_BLOG_QUERY })
         return data ?? [];
     } catch (error) {
-        console.log("Error fetching latest blogs", error)
+        console.error("Error fetching latest blogs", error)
         return [];
     }
 }
@@ -45,7 +45,7 @@ const getDealProducts = async () => {
         const { data } = await sanityFetch({ query: DEAL_PRODUCTS })
         return data ?? [];
     } catch (error) {
-        console.log("Error fetching deal products", error)
+        console.error("Error fetching deal products", error)
         return [];
     }
 }
