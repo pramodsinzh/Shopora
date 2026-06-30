@@ -7,6 +7,7 @@ import CategoryList from './shop/CategoryList'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import BrandList from './shop/BrandList'
+import PriceList from './shop/PriceList'
 
 
 interface Props {
@@ -16,13 +17,13 @@ interface Props {
 
 const Shop = ({ categories, brands }: Props) => {
     const searchParams = useSearchParams()
-    const brandParams = searchParams?.get("brand") 
+    const brandParams = searchParams?.get("brand")
     const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState(false)
-    const [selectedCategory, setSelectedCategory] = useState<string | null >(null)
-    const [selectedBrand, setSelectedBrand] = useState<string | null >(null)
-    const [selectedPrice, setSelectedPrice] = useState<string | null >(null)
-    
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const [selectedBrand, setSelectedBrand] = useState<string | null>(null)
+    const [selectedPrice, setSelectedPrice] = useState<string | null>(null)
+
     return (
         <div className='border-t'>
             <Container className='mt-5'>
@@ -35,10 +36,13 @@ const Shop = ({ categories, brands }: Props) => {
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-5 border-t border-t-shop_dark_green/50">
-                    <div className="md:sticky md:top-20 md:self-start md:h-[calc(100vh-160px)] md:overflow-hidden md:min-w-64 pb-5 md:border-r border-r-shop_dark_green/50">
+                    <div className="md:sticky md:top-20 md:self-start md:h-[calc(100vh-160px)] md:overflow-y-auto scrollbar-hide md:min-w-64 pb-5 md:border-r border-r-shop_dark_green/50">
                         <CategoryList categories={categories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-                        
+
                         <BrandList brands={brands} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} />
+
+                        <PriceList setSelectedPrice={setSelectedPrice} selectedPrice={selectedPrice} />
+
                     </div>
                     <div className="">Product</div>
                 </div>
