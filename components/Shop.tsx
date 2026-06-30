@@ -32,11 +32,19 @@ const Shop = ({ categories, brands }: Props) => {
                         <SubTitle className='text-lg uppercase tracking-wide'>
                             Get the products as your needs
                         </SubTitle>
-                        <button className='text-shop_dark_green underline text-sm mt-2 font-medium hover:text-shop_orange hoverEffect'>Reset filters</button>
+                        {(selectedCategory !== null || selectedBrand !== null || selectedPrice !== null) && (
+                            <button onClick={() => {
+                                setSelectedBrand(null);
+                                setSelectedCategory(null);
+                                setSelectedPrice(null);
+                            }} className='text-shop_dark_green underline text-sm mt-2 font-medium hover:text-shop_orange hoverEffect'>Reset filters</button>
+                        )
+                        }
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-5 border-t border-t-shop_dark_green/50">
                     <div className="md:sticky md:top-20 md:self-start md:h-[calc(100vh-160px)] md:overflow-y-auto scrollbar-hide md:min-w-64 pb-5 md:border-r border-r-shop_dark_green/50">
+
                         <CategoryList categories={categories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
 
                         <BrandList brands={brands} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} />
