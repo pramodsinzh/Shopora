@@ -6,6 +6,7 @@ import { SubTitle } from './ui/text'
 import CategoryList from './shop/CategoryList'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
+import BrandList from './shop/BrandList'
 
 
 interface Props {
@@ -36,6 +37,8 @@ const Shop = ({ categories, brands }: Props) => {
                 <div className="flex flex-col md:flex-row gap-5 border-t border-t-shop_dark_green/50">
                     <div className="md:sticky md:top-20 md:self-start md:h-[calc(100vh-160px)] md:overflow-hidden md:min-w-64 pb-5 md:border-r border-r-shop_dark_green/50">
                         <CategoryList categories={categories} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+                        
+                        <BrandList brands={brands} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} />
                     </div>
                     <div className="">Product</div>
                 </div>
