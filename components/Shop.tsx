@@ -21,12 +21,18 @@ interface Props {
 
 const Shop = ({ categories, brands }: Props) => {
     const searchParams = useSearchParams()
-    const brandParams = searchParams?.get("brand")
+    const brandParam = searchParams?.get("brand")
+    const categoryParam = searchParams?.get("category")
     const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null)
     const [selectedPrice, setSelectedPrice] = useState<string | null>(null)
+
+    useEffect(() => {
+        setSelectedBrand(brandParam || null)
+        setSelectedCategory(categoryParam || null)
+    }, [brandParam, categoryParam])
 
     const fetchProducts = async () => {
         setLoading(true)
