@@ -13,7 +13,7 @@ interface Props {
 const BrandList = ({brands, selectedBrand, setSelectedBrand}: Props) => {
   return (
     <div className='w-full bg-white pt-0 p-5'>
-      <SubTitle className='text-base font-semibold'>Brands</SubTitle>
+      <SubTitle className='text-base font-semibold underline'>Brands</SubTitle>
       <RadioGroup value={selectedBrand || ""} className="mt-2 space-y-1">
         {brands?.map((brand) => (
           <div

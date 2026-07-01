@@ -13,7 +13,7 @@ interface Props {
 const CategoryList = ({ categories, selectedCategory, setSelectedCategory }: Props) => {
   return (
     <div className='w-full bg-white p-5'>
-      <SubTitle className='text-base font-semibold'>Product Categories</SubTitle>
+      <SubTitle className='text-base font-semibold underline'>Product Categories</SubTitle>
       <RadioGroup value={selectedCategory || ""} className="mt-2 space-y-1">
         {categories?.map((category) => (
           <div

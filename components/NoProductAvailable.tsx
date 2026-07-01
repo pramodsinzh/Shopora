@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion"
 import { Loader2 } from "lucide-react";
 
-const NoProductAvailable = ({ selectedTab, className }: { selectedTab: string; className?: string }) => {
+const NoProductAvailable = ({ selectedTab, className }: { selectedTab?: string; className?: string }) => {
    return (
       <div className={cn("flex flex-col items-center justify-center py-10 min-h-80 text-center rounded-lg space-y-4 bg-gray-100 w-full mt-10", className)}>
          <motion.div

@@ -19,7 +19,7 @@ interface Props {
 const PriceList = ({ selectedPrice, setSelectedPrice }: Props) => {
   return (
     <div className='w-full bg-white pt-0 p-5'>
-      <SubTitle className='text-base font-semibold'>Price</SubTitle>
+      <SubTitle className='text-base font-semibold underline'>Price</SubTitle>
       <RadioGroup value={selectedPrice || ""} className="mt-2 space-y-1">
         {priceArray?.map((price, index) => (
           <div
