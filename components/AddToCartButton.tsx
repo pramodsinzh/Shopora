@@ -31,7 +31,7 @@ const AddToCartButton = ({ product, className }: Props) => {
     <div className='w-full h-12 flex items-center'>
       {itemCount ? (
         <div className="text-sm w-full">
-          <div className="">
+          <div className="flex items-center justify-between">
             <span className='text-xs text-darkColor/80'>Quantity</span>
             <QuantityButtons product={product} />
           </div>
