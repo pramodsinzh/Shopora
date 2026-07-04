@@ -1,14 +1,39 @@
+"use client"
+
+
 import { cn } from '@/lib/utils';
 import { Product } from '@/sanity.types'
+import useStore from '@/store';
 import { Heart } from 'lucide-react';
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
-const AddToWishListButton = ({product, className}: {product: Product; className?: string}) => {
+
+const AddToWishListButton = ({ product, className }: { product: Product; className?: string }) => {
+
+  const { favoriteProduct, addToFavorite } = useStore();
+  const [existingPrduct, setExistingPrduct] = useState<Product | null>(null)
+
+  useEffect(() => {
+    const availableProduct = favoriteProduct?.find(
+      (item) => item?._id === product?._id
+    )
+    setExistingPrduct(availableProduct || null)
+  }, [product, favoriteProduct])
+  const handleFavorite = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.preventDefault()
+    if (product?._id) {
+      addToFavorite(product).then(() => {
+        toast.success(existingPrduct ? "Product removed from wishlist" : "Product added to wishlist")
+      })
+    }
+  }
+
   return (
-    <div className={cn("absolute top-2 right-2 z-10", className)}>
-        <button className='p-2.5 rounded-full hover:bg-shop_dark_green hover:text-white hoverEffect bg-shop_lighter_bg'>
-            <Heart size={15} />
-        </button>
+    <div className={cn("absolute top-2 right-2 z-10 cursor-pointer", className)}>
+      <div onClick={handleFavorite} className={`p-2.5 rounded-full hover:bg-shop_dark_green/80 hover:text-white ${existingPrduct ? "bg-shop_dark_green/80 text-white hoverEffect" : "bg-lightColor/10"}`}>
+        <Heart size={15} />
+      </div>
     </div>
   )
 }
