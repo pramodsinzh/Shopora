@@ -11,6 +11,7 @@ import { RxBorderSplit } from 'react-icons/rx'
 import { FiShare2 } from 'react-icons/fi'
 import { FaRegQuestionCircle } from 'react-icons/fa'
 import { TbTruckDelivery } from 'react-icons/tb'
+import { notFound } from 'next/navigation';
 
 
 const SingleProductPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
@@ -19,6 +20,10 @@ const SingleProductPage = async ({ params }: { params: Promise<{ slug: string }>
     const brand = await getBrand(slug);
     const brandName = brand?.[0]?.brandName;
 
+    if(!product) {
+        return notFound()
+    }
+    
     return (
         <>
             <Container className='flex flex-col md:flex-row gap-10 py-10'>
