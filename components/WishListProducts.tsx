@@ -1,10 +1,17 @@
 "use client"
 
 import useStore from "@/store"
-import { ArrowRight, Heart, HeartCrack, HeartHandshake, HeartOff } from "lucide-react"
+import { ArrowRight, Heart, HeartCrack, HeartHandshake, HeartOff, X } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
 import Container from "./Container"
+import { Product } from "@/sanity.types"
+import toast from "react-hot-toast"
+import Image from "next/image"
+import { urlFor } from "@/sanity/lib/image"
+import PriceFormatter from "./PriceFormatter"
+import AddToCartButton from "./AddToCartButton"
+import { Button } from "./ui/button"
 
 const WishListProducts = () => {
     const [visibleProducts, setVisibleProducts] = useState(7)
@@ -13,11 +20,93 @@ const WishListProducts = () => {
     const loadMore = () => {
         setVisibleProducts((prev) => Math.min(prev + 5, favoriteProduct.length))
     }
+    const handleResetWishlist = () => {
+        const confirm = window.confirm("Are you sure you want to reset your wishlist?")
+        if(confirm){
+            resetFavorite()
+            toast.success("Wishlist cleared! Ready to start fresh.")
+        }
+    }
     return (
         <Container>
             {favoriteProduct?.length > 0 ? (
                 <>
-                    <p>prod</p>
+                    <div className="overflow-x-auto">
+                        <table className="w-full border-collapse">
+                            <thead className="border-b">
+                                <tr className="bg-black/5">
+                                    <th className="p-2 text-left">Image</th>
+                                    <th className="p-2 text-left hidden md:table-cell">Category</th>
+                                    <th className="p-2 text-left hidden md:table-cell">Type</th>
+                                    <th className="p-2 text-left hidden md:table-cell">Status</th>
+                                    <th className="p-2 text-left ">Price</th>
+                                    <th className="p-2 md:text-left text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {favoriteProduct?.slice(0, visibleProducts)?.map((product: Product) => (
+                                    <tr key={product?._id} className="border-b">
+                                        <td className="px-2 py-4 flex items-center gap-2">
+                                            <X onClick={() => {
+                                                removeFromFavorite(product?._id);
+                                                toast.success("Product removed from wishlist.")
+                                            }}
+                                                size={18}
+                                                className="hover:text-red-600 hover:cursor-pointer hoverEffect"
+                                            />
+                                            {product?.images && (
+                                                <Link className="border rounded-md group hidden md:inline-flex" href={`/product/${product?.slug?.current}`}>
+                                                    <Image
+                                                        src={urlFor(product?.images[0]).url()}
+                                                        alt="product image"
+                                                        width={50}
+                                                        height={50}
+                                                        className="object-contain rounded-md group-hover:scale-105 hoverEffect h-20 w-20"
+                                                    />
+                                                </Link>
+                                            )}
+                                            <p className="line-clamp-1">{product?.name}</p>
+                                        </td>
+                                        <td className="p-2 capitalize hidden md:table-cell">
+                                            {product?.categories && (
+                                                <p className="uppercase line-clamp-1 text-xs font-medium">
+                                                    {product.categories.map((cat) => cat).join(", ")}
+                                                </p>
+                                            )}
+                                        </td>
+                                        <td className="p-2 capitalize hidden md:table-cell text-sm">
+                                            {product?.varient}
+                                        </td>
+                                        <td className={`p-2 w-24 ${(product?.stock as number) > 0 ? "text-green-700" : "text-red-700"
+                                            } font-medium text-sm hidden md:table-cell`}>
+                                            {(product?.stock as number) > 0 ? "In stock" : "Out of stock"}
+                                        </td>
+                                        <td className="p-2">
+                                            <PriceFormatter amount={product.price} />
+                                        </td>
+                                        <td className="p-2">
+                                            <AddToCartButton product={product} className="w-full" />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        {visibleProducts < favoriteProduct?.length && (
+                            <div className="my-5">
+                                <Button variant='outline' onClick={loadMore}>Load more</Button>
+                            </div>
+                        )}
+                        {visibleProducts > 10 && (
+                            <div className="my-5">
+                                <Button variant='outline' onClick={() => setVisibleProducts(10)}>Load less</Button>
+                            </div>
+                        )}
+                    </div>
+                    {favoriteProduct?.length > 0 && (
+                        <Button onClick={handleResetWishlist} className='my-5 font-semibold bg-red-600 text-white hover:scale-95 hover:bg-red-600 hoverEffect' variant='destructive' size='lg'>Reset Wishlist</Button>
+                    )}
                 </>
             ) : (
                 <div className="flex min-h-[420px] items-center justify-center px-4 py-10">
