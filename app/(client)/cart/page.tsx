@@ -24,6 +24,19 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 
+const formatAddressLine = (address: Address) =>
+    `${address.address}, ${address.city}, ${address.state} ${address.zip}`
+
+const getSelectedAddress = (addressList: Address[] | null, addressId: string) =>
+    addressList?.find((addr) => addr._id === addressId) ?? null
+
+const toCheckoutAddress = (address: Address) => ({
+    name: address.name ?? "",
+    address: address.address ?? "",
+    city: address.city ?? "",
+    state: address.state ?? "",
+    zip: address.zip ?? "",
+})
 
 const CartPage = () => {
 
@@ -35,6 +48,7 @@ const CartPage = () => {
     const { user } = useUser()
     const [addresses, setAddresses] = useState<Address[] | null>(null)
     const [selectedAddressId, setSelectedAddressId] = useState("")
+    const selectedAddress = getSelectedAddress(addresses, selectedAddressId)
 
     const fetchAddresses = async () => {
         setLoading(true)
@@ -45,9 +59,9 @@ const CartPage = () => {
 
             const defaultAddress = data.find((addr: Address) => addr.default)
             if (defaultAddress) {
-                setSelectedAddressId(defaultAddress._id?.toString() ?? "")
+                setSelectedAddressId(defaultAddress._id)
             } else if (data.length > 0) {
-                setSelectedAddressId(data[0]?._id?.toString() ?? "")
+                setSelectedAddressId(data[0]._id)
             }
         } catch (error) {
             console.error("Address fetching error:", error)
@@ -71,6 +85,31 @@ const CartPage = () => {
         if (confirm) {
             deleteCartProduct(productId)  // Pass the product ID
             toast.success("Product removed from cart.")
+        }
+    }
+
+    const handleCheckout = () => {
+        setLoading(true)
+        try {
+            const address = getSelectedAddress(addresses, selectedAddressId)
+
+            if (!address) {
+                toast.error("Please select a delivery address")
+                return
+            }
+
+            const metadata = {
+                orderNumber: crypto.randomUUID(),
+                customerName: user?.fullName ?? "Unknown",
+                customerEmail: user?.emailAddresses[0]?.emailAddress ?? "Unknown",
+                clerkUserId: user?.id,
+                address: toCheckoutAddress(address),
+            };
+            console.log(metadata)
+        } catch (error) {
+            console.error("Error creating checkout session:", error)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -163,11 +202,22 @@ const CartPage = () => {
                                                     <PriceFormatter amount={getSubTotalPrice() - getTotalPrice()} />
                                                 </div>
                                                 <Separator />
+                                                {selectedAddress && (
+                                                    <div className="space-y-1 rounded-lg border border-shop_light_green/20 bg-shop_light_bg/40 p-3">
+                                                        <p className="text-xs font-semibold uppercase tracking-wide text-shop_dark_green">
+                                                            Delivering to
+                                                        </p>
+                                                        <p className="font-semibold">{selectedAddress.name}</p>
+                                                        <p className="text-sm text-black/60">
+                                                            {formatAddressLine(selectedAddress)}
+                                                        </p>
+                                                    </div>
+                                                )}
                                                 <div className="flex items-center justify-between font-semibold text-lg">
                                                     <span>Total</span>
                                                     <PriceFormatter amount={getTotalPrice()} className="font-semibold text-lg text-black" />
                                                 </div>
-                                                <Button className='w-full rounded-full font-semibold tracking-wide hoverEffect' size='lg'>
+                                                <Button className='w-full rounded-full font-semibold tracking-wide hoverEffect' size='lg' disabled={loading} onClick={handleCheckout}>
                                                     {loading ? "Please wait..." : "Proceed to checkout"}
                                                 </Button>
                                             </div>
@@ -184,7 +234,7 @@ const CartPage = () => {
                                                             onValueChange={setSelectedAddressId}
                                                         >
                                                             {addresses?.map((address) => {
-                                                                const addressId = address?._id?.toString() ?? ""
+                                                                const addressId = address._id
                                                                 const isSelected = selectedAddressId === addressId
 
                                                                 return (
@@ -202,8 +252,7 @@ const CartPage = () => {
                                                                                 {address?.name}
                                                                             </span>
                                                                             <span className="text-sm text-black/60">
-                                                                                {address.address}, {address.city},{" "}
-                                                                                {address.state} {address.zip}
+                                                                                {formatAddressLine(address)}
                                                                             </span>
                                                                         </Label>
                                                                     </div>
@@ -231,11 +280,22 @@ const CartPage = () => {
                                                 <PriceFormatter amount={getSubTotalPrice() - getTotalPrice()} />
                                             </div>
                                             <Separator />
+                                            {selectedAddress && (
+                                                <div className="space-y-1 rounded-lg border border-shop_light_green/20 bg-shop_light_bg/40 p-3">
+                                                    <p className="text-xs font-semibold uppercase tracking-wide text-shop_dark_green">
+                                                        Delivering to
+                                                    </p>
+                                                    <p className="font-semibold">{selectedAddress.name}</p>
+                                                    <p className="text-sm text-black/60">
+                                                        {formatAddressLine(selectedAddress)}
+                                                    </p>
+                                                </div>
+                                            )}
                                             <div className="flex items-center justify-between font-semibold text-lg">
                                                 <span>Total</span>
                                                 <PriceFormatter amount={getTotalPrice()} className="font-semibold text-lg text-black" />
                                             </div>
-                                            <Button className='w-full rounded-full font-semibold tracking-wide hoverEffect' size='lg'>
+                                            <Button className='w-full rounded-full font-semibold tracking-wide hoverEffect' size='lg' disabled={loading} onClick={handleCheckout}>
                                                 {loading ? "Please wait..." : "Proceed to checkout"}
                                             </Button>
                                         </div>
