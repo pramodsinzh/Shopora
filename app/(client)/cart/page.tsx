@@ -34,7 +34,7 @@ const CartPage = () => {
     const { isSignedIn } = useAuth()
     const { user } = useUser()
     const [addresses, setAddresses] = useState<Address[] | null>(null)
-    const [selectedAddress, setSelectedAddress] = useState<Address | null>(null)
+    const [selectedAddressId, setSelectedAddressId] = useState("")
 
     const fetchAddresses = async () => {
         setLoading(true)
@@ -45,9 +45,9 @@ const CartPage = () => {
 
             const defaultAddress = data.find((addr: Address) => addr.default)
             if (defaultAddress) {
-                setSelectedAddress(defaultAddress)
+                setSelectedAddressId(defaultAddress._id?.toString() ?? "")
             } else if (data.length > 0) {
-                setSelectedAddress(data[0])
+                setSelectedAddressId(data[0]?._id?.toString() ?? "")
             }
         } catch (error) {
             console.error("Address fetching error:", error)
@@ -180,29 +180,35 @@ const CartPage = () => {
                                                     </CardHeader>
                                                     <CardContent>
                                                         <RadioGroup
-                                                            defaultValue={addresses?.find((addr) => addr.default)?._id.toString()}
+                                                            value={selectedAddressId}
+                                                            onValueChange={setSelectedAddressId}
                                                         >
-                                                            {addresses?.map((address) => (
-                                                                <div
-                                                                    key={address._id}
-                                                                    onClick={() => setSelectedAddress(address)}
-                                                                    className={`flex items-center space-x-2 mb-4 cursor-pointer ${selectedAddress?._id === address?._id && "text-shop_dark_green"}`}
-                                                                >
-                                                                    <RadioGroupItem value={address?._id.toString()} />
-                                                                    <Label
-                                                                        htmlFor={`address-${address?._id}`}
-                                                                        className="grid flex-1 gap-1.5"
+                                                            {addresses?.map((address) => {
+                                                                const addressId = address?._id?.toString() ?? ""
+                                                                const isSelected = selectedAddressId === addressId
+
+                                                                return (
+                                                                    <div
+                                                                        key={addressId}
+                                                                        onClick={() => setSelectedAddressId(addressId)}
+                                                                        className={`flex items-center space-x-2 mb-4 cursor-pointer ${isSelected && "text-shop_dark_green"}`}
                                                                     >
-                                                                        <span className="font-semibold" >
-                                                                            {address?.name}
-                                                                        </span>
-                                                                        <span className="text-sm text-black/60">
-                                                                            {address.address}, {address.city},{" "}
-                                                                            {address.state} {address.zip}
-                                                                        </span>
-                                                                    </Label>
-                                                                </div>
-                                                            ))}
+                                                                        <RadioGroupItem value={addressId} id={`address-${addressId}`} />
+                                                                        <Label
+                                                                            htmlFor={`address-${addressId}`}
+                                                                            className="grid flex-1 gap-1.5 cursor-pointer"
+                                                                        >
+                                                                            <span className="font-semibold" >
+                                                                                {address?.name}
+                                                                            </span>
+                                                                            <span className="text-sm text-black/60">
+                                                                                {address.address}, {address.city},{" "}
+                                                                                {address.state} {address.zip}
+                                                                            </span>
+                                                                        </Label>
+                                                                    </div>
+                                                                )
+                                                            })}
                                                         </RadioGroup>
                                                         <Button variant='outline' className='w-full mt-4'>Add New Address</Button>
                                                     </CardContent>
