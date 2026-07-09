@@ -1,5 +1,6 @@
 "use client"
 
+import { createCheckoutSession, Metadata } from "@/actions/checkoutSession"
 import AddToWishListButton from "@/components/AddToWishListButton"
 import Container from "@/components/Container"
 import EmptyCart from "@/components/EmptyCart"
@@ -88,7 +89,7 @@ const CartPage = () => {
         }
     }
 
-    const handleCheckout = () => {
+    const handleCheckout = async () => {
         setLoading(true)
         try {
             const address = getSelectedAddress(addresses, selectedAddressId)
@@ -98,14 +99,20 @@ const CartPage = () => {
                 return
             }
 
-            const metadata = {
+            const metadata: Metadata = {
                 orderNumber: crypto.randomUUID(),
                 customerName: user?.fullName ?? "Unknown",
                 customerEmail: user?.emailAddresses[0]?.emailAddress ?? "Unknown",
                 clerkUserId: user?.id,
                 address: toCheckoutAddress(address),
             };
-            console.log(metadata)
+
+
+            const checkoutUrl = await createCheckoutSession(groupedItems, metadata)
+            if (checkoutUrl) {
+                window.location.href = checkoutUrl
+            }
+
         } catch (error) {
             console.error("Error creating checkout session:", error)
         } finally {
