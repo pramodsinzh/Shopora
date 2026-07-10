@@ -4,16 +4,7 @@ import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import useStore from "@/store"
 import { useUser } from "@clerk/nextjs"
-import {
-  ArrowRight,
-  Check,
-  Copy,
-  Home,
-  Mail,
-  Package,
-  ShoppingBag,
-  Truck,
-} from "lucide-react"
+import { ArrowRight, Check, Copy, Home, Mail, Package, ShoppingBag, Truck } from "lucide-react"
 import { motion, spring } from "motion/react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
@@ -180,29 +171,26 @@ const SuccessPage = () => {
                     <div key={step.title} className="flex gap-3">
                       <div className="flex flex-col items-center">
                         <div
-                          className={`flex h-8 w-8 items-center justify-center rounded-full ${
-                            isComplete
+                          className={`flex h-8 w-8 items-center justify-center rounded-full ${isComplete
                               ? "bg-shop_dark_green text-white"
                               : isCurrent
                                 ? "bg-shop_light_green/15 text-shop_dark_green ring-2 ring-shop_light_green/30"
                                 : "bg-shop_light_bg text-lightColor"
-                          }`}
+                            }`}
                         >
                           <Icon className="h-4 w-4" />
                         </div>
                         {index < nextSteps.length - 1 && (
                           <div
-                            className={`mt-1 h-full min-h-6 w-px ${
-                              isComplete ? "bg-shop_light_green" : "bg-shop_light_green/20"
-                            }`}
+                            className={`mt-1 h-full min-h-6 w-px ${isComplete ? "bg-shop_light_green" : "bg-shop_light_green/20"
+                              }`}
                           />
                         )}
                       </div>
                       <div className="pb-1 pt-0.5 text-left">
                         <p
-                          className={`text-sm font-semibold ${
-                            isComplete || isCurrent ? "text-darkColor" : "text-lightColor"
-                          }`}
+                          className={`text-sm font-semibold ${isComplete || isCurrent ? "text-darkColor" : "text-lightColor"
+                            }`}
                         >
                           {step.title}
                         </p>
