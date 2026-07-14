@@ -9,6 +9,7 @@ import SignIn from './SignIn'
 import MobileMenu from './MobileMenu'
 import { currentUser } from '@clerk/nextjs/server'
 import { ClerkLoaded, UserButton } from '@clerk/nextjs'
+import Link from 'next/link'
 
 const Header = async () => {
   const user = await currentUser() 
@@ -25,6 +26,7 @@ const Header = async () => {
           <CartIcon />
           <FavoriteButton />
           <ClerkLoaded>
+            {user && <Link href={"/orders"} />}
             {user ? <UserButton /> : <SignIn />}
           </ClerkLoaded>
         </div>
