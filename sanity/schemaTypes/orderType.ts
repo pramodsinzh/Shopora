@@ -158,10 +158,17 @@ export const orderType = defineType({
             email: "email",
         },
         prepare(select){
-            const orderIdSnippet = `${select.orderId.slice(0, 5)}...${select.orderId.slice(-5)}`
+            const orderId = typeof select.orderId === "string" ? select.orderId : ""
+            const orderIdSnippet = orderId
+                ? `${orderId.slice(0, 5)}...${orderId.slice(-5)}`
+                : "unknown"
+            const name = typeof select.name === "string" && select.name ? select.name : "Guest"
+            const amount = typeof select.amount === "number" ? select.amount : 0
+            const currency = typeof select.currency === "string" ? select.currency : "USD"
+            const email = typeof select.email === "string" ? select.email : ""
             return {
-                title: `${select.name} (${orderIdSnippet})`,
-                subtitle: `${select.amount} ${select.currency}, ${select.email}`,
+                title: `${name} (${orderIdSnippet})`,
+                subtitle: `${amount} ${currency}${email ? `, ${email}` : ""}`,
                 media: BasketIcon,
             }
         }
