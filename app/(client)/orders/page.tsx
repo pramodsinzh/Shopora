@@ -1,6 +1,8 @@
 import Container from '@/components/Container';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Table, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { getMyOrders } from '@/sanity/queries';
 import { auth } from '@clerk/nextjs/server';
 import { FileX } from 'lucide-react';
@@ -15,9 +17,30 @@ const ordersPage = async () => {
     const orders = await getMyOrders(userId)
     console.log(orders)
     return (
-        <Container>
+        <Container className='py-10'>
             {orders?.length ? (
-                <Card>orders</Card>
+                <Card className='w-full'>
+                    <CardHeader>
+                        <CardTitle>Order List</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ScrollArea>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead className='w-[100px] md:w-auto'>Order Number</TableHead>
+                                        <TableHead className='hidden md:table-cell'>Date</TableHead>
+                                        <TableHead >Customer</TableHead>
+                                        <TableHead className='hidden sm:table-cell'>Email</TableHead>
+                                        <TableHead>Total</TableHead>
+                                        <TableHead>Status</TableHead>
+                                        <TableHead className='hidden sm:table-cell'>Invoice Number</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                            </Table>
+                        </ScrollArea>
+                    </CardContent>
+                </Card>
             ) : (
                 <div className="flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                     <FileX className='h-24 w-24 text-gray-400 mb-4' />
