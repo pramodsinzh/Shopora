@@ -1,4 +1,5 @@
 import Container from '@/components/Container';
+import OrdersComponent from '@/components/OrdersComponent';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -35,8 +36,10 @@ const ordersPage = async () => {
                                         <TableHead>Total</TableHead>
                                         <TableHead>Status</TableHead>
                                         <TableHead className='hidden sm:table-cell'>Invoice Number</TableHead>
+                                        <TableHead className='hidden sm:table-cell'>Action</TableHead>
                                     </TableRow>
                                 </TableHeader>
+                                <OrdersComponent orders={orders} />
                             </Table>
                         </ScrollArea>
                     </CardContent>
@@ -48,9 +51,9 @@ const ordersPage = async () => {
                     <p className="mt-2 text-sm text-gray-600 text-center max-w-md">
                         It looks like you haven't placed any order yet. Start shopping to see your orders here!
                     </p>
-                    <Button className='mt-6'>
-                        <Link href='/'>Browse Products</Link>
-                    </Button>
+                    <Link href='/' className='mt-6 inline-flex'>
+                        <Button className='mt-6'>Browse Products</Button>
+                    </Link>
                 </div>
             )}
         </Container>
