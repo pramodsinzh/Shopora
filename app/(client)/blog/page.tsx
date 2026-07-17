@@ -10,10 +10,10 @@ import Link from 'next/link'
 const BlogPage = async () => {
   const blogs = await getAllBlogs(10)
   return (
-    <div className='mb-10 lg:mb-20'>
-      <Container>
-        <SubTitle>Blog Page</SubTitle>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5 md:mt-10">
+    <div className='mb-10 md:mb-15 border-t'>
+      <Container className='mt-5'>
+        <SubTitle className='text-lg uppercase'>Blog Page</SubTitle>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5 ">
           {blogs?.map((blog) => (
             <div key={blog._id} className="rounded-md overflow-hidden group">
               {blog?.mainImage && (
