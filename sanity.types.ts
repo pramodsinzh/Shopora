@@ -484,6 +484,33 @@ export type LATEST_BLOG_QUERY_RESULT = Array<{
 }>;
 
 // Source: sanity/queries/query.ts
+// Variable: GET_ALL_BLOG
+// Query: *[_type == 'blog'] | order(publishedAt desc) [0...$quantity]{    ...,      blogcategories[]->{      title}    }
+export type GET_ALL_BLOG_RESULT = Array<{
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  author?: AuthorReference;
+  mainImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  blogcategories: Array<{
+    title: string | null;
+  }> | null;
+  publishedAt?: string;
+  isLatest?: boolean;
+  body?: BlockContent;
+}>;
+
+// Source: sanity/queries/query.ts
 // Variable: DEAL_PRODUCTS
 // Query: *[_type == 'product' && status == 'hot'] | order(name asc){    ..., "categories": categories[]->title    }
 export type DEAL_PRODUCTS_RESULT = Array<{
@@ -636,6 +663,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "brand"] | order(name asc)': BRANDS_QUERY_RESULT;
     '*[_type == "blog" && isLatest == true] | order(name asc){\n    ...,\n    blogcategories[]->{title}\n    } ': LATEST_BLOG_QUERY_RESULT;
+    "*[_type == 'blog'] | order(publishedAt desc) [0...$quantity]{\n    ...,\n      blogcategories[]->{\n      title}\n    }": GET_ALL_BLOG_RESULT;
     "*[_type == 'product' && status == 'hot'] | order(name asc){\n    ..., \"categories\": categories[]->title\n    }": DEAL_PRODUCTS_RESULT;
     '*[_type == "product" && slug.current == $slug] | order(name asc) [0]': PRODUCT_BY_SLUG_QUERY_RESULT;
     '*[_type == "product" && slug.current == $slug ] | order(name asc) {\n      "brandName"  : brand -> title\n    } ': BRAND_QUERY_RESULT;
