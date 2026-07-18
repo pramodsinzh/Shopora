@@ -17,6 +17,20 @@ const GET_ALL_BLOG = defineQuery(
     }`
 )
 
+const SINGLE_BLOG_QUERY = defineQuery(
+  `*[_type == "blog" && slug.current == $slug][0]{
+    ...,
+    author->{
+      name,
+      image,
+    },
+      blogcategories[]->{
+      title,
+      "slug": slug.current,
+    }
+  }`
+)
+
 const DEAL_PRODUCTS = defineQuery(
   `*[_type == 'product' && status == 'hot'] | order(name asc){
     ..., "categories": categories[]->title
@@ -45,4 +59,4 @@ const MY_ORDERS_QUERY = defineQuery(
 
 
 
-export { BRANDS_QUERY, LATEST_BLOG_QUERY, DEAL_PRODUCTS, PRODUCT_BY_SLUG_QUERY, BRAND_QUERY, MY_ORDERS_QUERY, GET_ALL_BLOG }
+export { BRANDS_QUERY, LATEST_BLOG_QUERY, SINGLE_BLOG_QUERY, DEAL_PRODUCTS, PRODUCT_BY_SLUG_QUERY, BRAND_QUERY, MY_ORDERS_QUERY, GET_ALL_BLOG }
