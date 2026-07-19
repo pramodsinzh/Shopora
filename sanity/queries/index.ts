@@ -1,5 +1,5 @@
 import { sanityFetch } from "../lib/live";
-import { BRAND_QUERY, BRANDS_QUERY, DEAL_PRODUCTS, GET_ALL_BLOG, LATEST_BLOG_QUERY, MY_ORDERS_QUERY, PRODUCT_BY_SLUG_QUERY, SINGLE_BLOG_QUERY } from "./query";
+import { BLOG_CATEGORIES, BRAND_QUERY, BRANDS_QUERY, DEAL_PRODUCTS, GET_ALL_BLOG, LATEST_BLOG_QUERY, MY_ORDERS_QUERY, OTHER_BLOGS_QUERY, PRODUCT_BY_SLUG_QUERY, SINGLE_BLOG_QUERY } from "./query";
 
 const getCategories = async (quantity?: number) => {
     try {
@@ -59,6 +59,24 @@ const getSingleBlog = async (slug: string) => {
         return [];
     }
 }
+const getBlogCategories = async () => {
+    try {
+        const { data } = await sanityFetch({ query: BLOG_CATEGORIES })
+        return data ?? [];
+    } catch (error) {
+        console.error("Error fetching blog categories", error)
+        return [];
+    }
+}
+const getOtherBlogs = async (slug: string, quantity: number) => {
+    try {
+        const { data } = await sanityFetch({ query: OTHER_BLOGS_QUERY, params: {slug, quantity} })
+        return data ?? [];
+    } catch (error) {
+        console.error("Error fetching other blogs!", error)
+        return [];
+    }
+}
 
 const getDealProducts = async () => {
     try {
@@ -97,4 +115,4 @@ const getMyOrders = async (userId: string) => {
     }
 }
 
-export { getCategories, getAllBrands, getLatestBlogs, getAllBlogs, getSingleBlog, getDealProducts, getProductBySlug, getBrand, getMyOrders }
+export { getCategories, getAllBrands, getLatestBlogs, getAllBlogs, getSingleBlog, getOtherBlogs, getBlogCategories, getDealProducts, getProductBySlug, getBrand, getMyOrders }
