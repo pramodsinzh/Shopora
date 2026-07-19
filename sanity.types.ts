@@ -548,6 +548,52 @@ export type SINGLE_BLOG_QUERY_RESULT = {
 } | null;
 
 // Source: sanity/queries/query.ts
+// Variable: BLOG_CATEGORIES
+// Query: *[_type == "category"]{    title,    "slug": slug.current,    "count": count(*[_type == "blog" && references(^._id)])  }
+export type BLOG_CATEGORIES_RESULT = Array<{
+  title: string | null;
+  slug: string | null;
+  count: number;
+}>;
+
+// Source: sanity/queries/query.ts
+// Variable: OTHER_BLOGS_QUERY
+// Query: *[_type == "blog" && defined(slug.current) && slug.current != $slug] | order(publishedAt desc)[0...$quantity]{    ...,    publishedAt,    title,    mainImage,    slug,    author->{      name,      image,    },    blogcategories[]->{      title,      "slug": slug.current    }  }
+export type OTHER_BLOGS_QUERY_RESULT = Array<{
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string | null;
+  slug: Slug | null;
+  author: {
+    name: string | null;
+    image: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+  } | null;
+  mainImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  blogcategories: Array<{
+    title: string | null;
+    slug: string | null;
+  }> | null;
+  publishedAt: string | null;
+  isLatest?: boolean;
+  body?: BlockContent;
+}>;
+
+// Source: sanity/queries/query.ts
 // Variable: DEAL_PRODUCTS
 // Query: *[_type == 'product' && status == 'hot'] | order(name asc){    ..., "categories": categories[]->title    }
 export type DEAL_PRODUCTS_RESULT = Array<{
@@ -702,6 +748,8 @@ declare module "@sanity/client" {
     '*[_type == "blog" && isLatest == true] | order(name asc){\n    ...,\n    blogcategories[]->{title}\n    } ': LATEST_BLOG_QUERY_RESULT;
     "*[_type == 'blog'] | order(publishedAt desc) [0...$quantity]{\n    ...,\n      blogcategories[]->{\n      title}\n    }": GET_ALL_BLOG_RESULT;
     '*[_type == "blog" && slug.current == $slug][0]{\n    ...,\n    author->{\n      name,\n      image,\n    },\n      blogcategories[]->{\n      title,\n      "slug": slug.current,\n    }\n  }': SINGLE_BLOG_QUERY_RESULT;
+    '*[_type == "category"]{\n    title,\n    "slug": slug.current,\n    "count": count(*[_type == "blog" && references(^._id)])\n  }': BLOG_CATEGORIES_RESULT;
+    '*[_type == "blog" && defined(slug.current) && slug.current != $slug] | order(publishedAt desc)[0...$quantity]{\n    ...,\n    publishedAt,\n    title,\n    mainImage,\n    slug,\n    author->{\n      name,\n      image,\n    },\n    blogcategories[]->{\n      title,\n      "slug": slug.current\n    }\n  }': OTHER_BLOGS_QUERY_RESULT;
     "*[_type == 'product' && status == 'hot'] | order(name asc){\n    ..., \"categories\": categories[]->title\n    }": DEAL_PRODUCTS_RESULT;
     '*[_type == "product" && slug.current == $slug] | order(name asc) [0]': PRODUCT_BY_SLUG_QUERY_RESULT;
     '*[_type == "product" && slug.current == $slug ] | order(name asc) {\n      "brandName"  : brand -> title\n    } ': BRAND_QUERY_RESULT;

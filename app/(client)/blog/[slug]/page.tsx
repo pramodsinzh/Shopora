@@ -1,8 +1,8 @@
 import Container from '@/components/Container'
 import { SubTitle } from '@/components/ui/text'
-import { SINGLE_BLOG_QUERY_RESULT } from '@/sanity.types'
+import { Blog, SINGLE_BLOG_QUERY_RESULT } from '@/sanity.types'
 import { urlFor } from '@/sanity/lib/image'
-import { getSingleBlog } from '@/sanity/queries'
+import { getBlogCategories, getOtherBlogs, getSingleBlog } from '@/sanity/queries'
 import dayjs from 'dayjs'
 import { Calendar, ChevronLastIcon, ChevronLeftIcon } from 'lucide-react'
 import { PortableText } from 'next-sanity'
@@ -16,7 +16,7 @@ const SingleBlogPage = async ({ params }: { params: Promise<{ slug: string }> })
   if (!blog) return notFound()
 
   return (
-    <div className='mb-10 md:mb-15 border-t'>
+    <div className='mb-10 md:mb-15'>
       <Container className='grid grid-cols-1 lg:grid-cols-4 gap-5'>
         <div className="md:col-span-3">
           {blog?.mainImage && (
@@ -131,7 +131,7 @@ const SingleBlogPage = async ({ params }: { params: Promise<{ slug: string }> })
                 )}
                 <div className="mt-10">
                   <Link href='/blog' className='flex items-center gap-1'>
-                    < ChevronLeftIcon className='size-5' />
+                    <ChevronLeftIcon className='size-5' />
                     <span className="text-sm font-semibold">Back to blog</span>
                   </Link>
                 </div>
@@ -145,8 +145,54 @@ const SingleBlogPage = async ({ params }: { params: Promise<{ slug: string }> })
   )
 }
 
-const BlogLeft = async({slug}: {slug: string}) => {
-  
+const BlogLeft = async ({ slug }: { slug: string }) => {
+  const categories = await getBlogCategories();
+  const blogs = (await getOtherBlogs(slug, 5)) as Blog[];
+
+  return (
+    <div className="">
+      <div className="border border-lightColor p-5 rounded-md">
+        <SubTitle className='text-base'>Blog Categories</SubTitle>
+        <div className="space-y-2 mt-2">
+          {categories?.map(({ blogcategories }, index) => (
+            <div
+              key={index}
+              className='text-lightColor flex items-center justify-between text-sm font-medium'
+            >
+              <p>{blogcategories?.[0]?.title}</p>
+              <p className="text-darkColor font-semibold">{`(${blogcategories?.length ?? 0})`}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="border border-lightColor p-5 rounded-md mt-10">
+        <SubTitle className='text-base'>Latest Blogs</SubTitle>
+        <div className="space-y-4 mt-4">
+          {blogs?.map((blog, index: number) => {
+            const blogSlug = blog?.slug?.current ?? '';
+            return (
+              <Link
+                href={blogSlug ? `/blog/${blogSlug}` : '/blog'}
+                key={`${blog?._id ?? 'blog'}-${index}`}
+                className='flex items-center gap-2 group'
+              >
+                {blog?.mainImage && (
+                  <Image
+                    src={urlFor(blog.mainImage).url()}
+                    alt='blogImage'
+                    width={100}
+                    height={100}
+                    className='w-16 h-16 rounded-full object-cover border-[1px] border-shop_dark_green/10 group-hover:border-shop_dark_green hoverEffect'
+                  />
+                )}
+                <p className="line-clamp-2 text-sm text-lightColor group-hover:border-shop_dark_green hoverEffect">{blog?.title}</p>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default SingleBlogPage

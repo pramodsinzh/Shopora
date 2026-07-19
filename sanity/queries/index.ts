@@ -53,10 +53,10 @@ const getAllBlogs = async (quantity: number) => {
 const getSingleBlog = async (slug: string) => {
     try {
         const { data } = await sanityFetch({ query: SINGLE_BLOG_QUERY, params: { slug } })
-        return data ?? [];
+        return data ?? null;
     } catch (error) {
         console.error("Error fetching blog", error)
-        return [];
+        return null;
     }
 }
 const getBlogCategories = async () => {
