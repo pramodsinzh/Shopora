@@ -40,20 +40,20 @@ const BLOG_CATEGORIES = defineQuery(
 )
 
 const OTHER_BLOGS_QUERY = defineQuery(
-  `*[_type = "blog" && defined(slug.current) && slug.current != $slug ] | order(publishedAt desc)[0...$quantity] {
-    ...
+  `*[_type == "blog" && defined(slug.current) && slug.current != $slug] | order(publishedAt desc)[0...$quantity]{
+    ...,
     publishedAt,
     title,
     mainImage,
     slug,
-    author -> {
+    author->{
       name,
       image,
     },
-    categories[]->{
+    blogcategories[]->{
       title,
-      "slug": slug.current,
-    }  
+      "slug": slug.current
+    }
   }`
 )
 
