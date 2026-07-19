@@ -31,6 +31,32 @@ const SINGLE_BLOG_QUERY = defineQuery(
   }`
 )
 
+const BLOG_CATEGORIES = defineQuery(
+  `*[_type == "blog"]{
+    blogcategories[]->{
+    ...
+    }
+  }`
+)
+
+const OTHER_BLOGS_QUERY = defineQuery(
+  `*[_type = "blog" && defined(slug.current) && slug.current != $slug ] | order(publishedAt desc)[0...$quantity] {
+    ...
+    publishedAt,
+    title,
+    mainImage,
+    slug,
+    author -> {
+      name,
+      image,
+    },
+    categories[]->{
+      title,
+      "slug": slug.current,
+    }  
+  }`
+)
+
 const DEAL_PRODUCTS = defineQuery(
   `*[_type == 'product' && status == 'hot'] | order(name asc){
     ..., "categories": categories[]->title
@@ -59,4 +85,4 @@ const MY_ORDERS_QUERY = defineQuery(
 
 
 
-export { BRANDS_QUERY, LATEST_BLOG_QUERY, SINGLE_BLOG_QUERY, DEAL_PRODUCTS, PRODUCT_BY_SLUG_QUERY, BRAND_QUERY, MY_ORDERS_QUERY, GET_ALL_BLOG }
+export { BRANDS_QUERY, LATEST_BLOG_QUERY, SINGLE_BLOG_QUERY, OTHER_BLOGS_QUERY, BLOG_CATEGORIES, DEAL_PRODUCTS, PRODUCT_BY_SLUG_QUERY, BRAND_QUERY, MY_ORDERS_QUERY, GET_ALL_BLOG }
