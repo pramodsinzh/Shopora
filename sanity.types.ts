@@ -549,11 +549,18 @@ export type SINGLE_BLOG_QUERY_RESULT = {
 
 // Source: sanity/queries/query.ts
 // Variable: BLOG_CATEGORIES
-// Query: *[_type == "category"]{    title,    "slug": slug.current,    "count": count(*[_type == "blog" && references(^._id)])  }
+// Query: *[_type == "blog"]{    blogcategories[]->{    ...    }  }
 export type BLOG_CATEGORIES_RESULT = Array<{
-  title: string | null;
-  slug: string | null;
-  count: number;
+  blogcategories: Array<{
+    _id: string;
+    _type: "blogcategory";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title?: string;
+    slug?: Slug;
+    description?: string;
+  }> | null;
 }>;
 
 // Source: sanity/queries/query.ts
@@ -740,6 +747,18 @@ export type MY_ORDERS_QUERY_RESULT = Array<{
   orderDate?: string;
 }>;
 
+// Source: sanity/queries/search.ts
+// Variable: ALL_PRODUCTS_SEARCH_QUERY
+// Query: *[_type == "product" && defined(slug.current)]{    _id,    title,    "slug": slug.current,    image,    price,    discount  }
+export type ALL_PRODUCTS_SEARCH_QUERY_RESULT = Array<{
+  _id: string;
+  title: null;
+  slug: string | null;
+  image: null;
+  price: number | null;
+  discount: number | null;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -748,11 +767,12 @@ declare module "@sanity/client" {
     '*[_type == "blog" && isLatest == true] | order(name asc){\n    ...,\n    blogcategories[]->{title}\n    } ': LATEST_BLOG_QUERY_RESULT;
     "*[_type == 'blog'] | order(publishedAt desc) [0...$quantity]{\n    ...,\n      blogcategories[]->{\n      title}\n    }": GET_ALL_BLOG_RESULT;
     '*[_type == "blog" && slug.current == $slug][0]{\n    ...,\n    author->{\n      name,\n      image,\n    },\n      blogcategories[]->{\n      title,\n      "slug": slug.current,\n    }\n  }': SINGLE_BLOG_QUERY_RESULT;
-    '*[_type == "category"]{\n    title,\n    "slug": slug.current,\n    "count": count(*[_type == "blog" && references(^._id)])\n  }': BLOG_CATEGORIES_RESULT;
+    '*[_type == "blog"]{\n    blogcategories[]->{\n    ...\n    }\n  }': BLOG_CATEGORIES_RESULT;
     '*[_type == "blog" && defined(slug.current) && slug.current != $slug] | order(publishedAt desc)[0...$quantity]{\n    ...,\n    publishedAt,\n    title,\n    mainImage,\n    slug,\n    author->{\n      name,\n      image,\n    },\n    blogcategories[]->{\n      title,\n      "slug": slug.current\n    }\n  }': OTHER_BLOGS_QUERY_RESULT;
     "*[_type == 'product' && status == 'hot'] | order(name asc){\n    ..., \"categories\": categories[]->title\n    }": DEAL_PRODUCTS_RESULT;
     '*[_type == "product" && slug.current == $slug] | order(name asc) [0]': PRODUCT_BY_SLUG_QUERY_RESULT;
     '*[_type == "product" && slug.current == $slug ] | order(name asc) {\n      "brandName"  : brand -> title\n    } ': BRAND_QUERY_RESULT;
     '*[_type == "order" && clerkUserId == $userId] | order(orderDate desc){\n    ...,\n    products[]{\n      ...,\n      product->\n    }\n  }': MY_ORDERS_QUERY_RESULT;
+    '*[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    "slug": slug.current,\n    image,\n    price,\n    discount\n  }': ALL_PRODUCTS_SEARCH_QUERY_RESULT;
   }
 }

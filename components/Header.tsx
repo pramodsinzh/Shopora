@@ -1,8 +1,7 @@
 import React from 'react'
 import Container from './Container'
 import Logo from './Logo'
-import HeaderMenu from './HeaderMenu'
-import SearchBar from './SearchBar'
+import HeaderMenu from './HeaderMenu' 
 import CartIcon from './CartIcon'
 import FavoriteButton from './FavoriteButton'
 import SignIn from './SignIn'
@@ -11,7 +10,8 @@ import { auth, currentUser } from '@clerk/nextjs/server'
 import { ClerkLoaded, UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import { getMyOrders } from '@/sanity/queries'
-import { Logs } from 'lucide-react'
+import { Logs } from 'lucide-react' 
+import SearchBar from './SearchBar'
 
 const Header = async () => {
   const user = await currentUser() 

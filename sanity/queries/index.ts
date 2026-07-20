@@ -1,5 +1,7 @@
+ 
 import { sanityFetch } from "../lib/live";
-import { BLOG_CATEGORIES, BRAND_QUERY, BRANDS_QUERY, DEAL_PRODUCTS, GET_ALL_BLOG, LATEST_BLOG_QUERY, MY_ORDERS_QUERY, OTHER_BLOGS_QUERY, PRODUCT_BY_SLUG_QUERY, SINGLE_BLOG_QUERY } from "./query";
+import {  BLOG_CATEGORIES, BRAND_QUERY, BRANDS_QUERY, DEAL_PRODUCTS, GET_ALL_BLOG, LATEST_BLOG_QUERY, MY_ORDERS_QUERY, OTHER_BLOGS_QUERY, PRODUCT_BY_SLUG_QUERY, SINGLE_BLOG_QUERY } from "./query";
+ 
 
 const getCategories = async (quantity?: number) => {
     try {
@@ -113,6 +115,7 @@ const getMyOrders = async (userId: string) => {
         console.error("Error fetching orders:", error)
         return null;
     }
-}
+}  
 
-export { getCategories, getAllBrands, getLatestBlogs, getAllBlogs, getSingleBlog, getOtherBlogs, getBlogCategories, getDealProducts, getProductBySlug, getBrand, getMyOrders }
+ 
+export { getCategories, getAllBrands, getLatestBlogs, getAllBlogs, getSingleBlog, getOtherBlogs, getBlogCategories, getDealProducts, getProductBySlug, getBrand, getMyOrders}
