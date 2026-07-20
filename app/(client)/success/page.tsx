@@ -8,7 +8,7 @@ import { ArrowRight, Check, Copy, Home, Mail, Package, ShoppingBag, Truck } from
 import { motion, spring } from "motion/react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 import toast from "react-hot-toast"
 
 const nextSteps = [
@@ -32,7 +32,7 @@ const nextSteps = [
   },
 ]
 
-const SuccessPage = () => {
+function SuccessContent() {
   const { user } = useUser()
   const { resetCart } = useStore()
   const searchParams = useSearchParams()
@@ -243,6 +243,20 @@ const SuccessPage = () => {
         </div>
       </motion.div>
     </div>
+  )
+}
+
+const SuccessPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-[70vh] items-center justify-center">
+          <p className="text-sm text-lightColor">Loading your order…</p>
+        </div>
+      }
+    >
+      <SuccessContent />
+    </Suspense>
   )
 }
 
