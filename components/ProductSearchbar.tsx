@@ -8,6 +8,7 @@ import { Search, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import PriceFormatter from "./PriceFormatter";
 import PriceView from "./PriceView";
 import QuantityButtons from "./QuantityButtons";
@@ -33,7 +34,13 @@ const ProductSearchbar = ({ open, onClose }: Props) => {
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { getItemCount } = useStore();
+
+  // Portals need a client-mounted check to avoid SSR mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (open && products.length === 0) {
@@ -50,6 +57,14 @@ const ProductSearchbar = ({ open, onClose }: Props) => {
     if (!open) setQuery("");
   }, [open]);
 
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const filtered = useMemo(() => {
     if (!query.trim()) return [];
     return products.filter((p) =>
@@ -60,11 +75,11 @@ const ProductSearchbar = ({ open, onClose }: Props) => {
   const showAllList = query.trim().length === 0;
   const showNoResults = query.trim().length > 0 && filtered.length === 0;
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
+  const modalContent = (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 pt-24"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4"
       onClick={onClose}
     >
       <div
@@ -90,7 +105,7 @@ const ProductSearchbar = ({ open, onClose }: Props) => {
           {query && (
             <button
               onClick={() => setQuery("")}
-              className="absolute right-10 top-1/2 -translate-y-1/2"
+              className="absolute right-10 top-1/2 -translate-y-1/2 px-2"
               aria-label="Clear search"
             >
               <X className="w-4 h-4 text-lightColor" />
@@ -140,25 +155,19 @@ const ProductSearchbar = ({ open, onClose }: Props) => {
                 return (
                   <div key={product._id} className="flex items-center gap-4 p-3">
                     {product?.images && product.images[0] && (
-                      <Link href={`/product/${product?.slug?.current}`} onClick={onClose}>
-                        <Image
-                          src={urlFor(product.images[0]).url()}
-                          alt={product?.name ?? "product image"}
-                          width={100}
-                          height={100}
-                          className="w-20 h-20 rounded-md object-cover border border-shop_dark_green/10"
-                        />
-                      </Link>
+                      <Image
+                        src={urlFor(product.images[0]).url()}
+                        alt={product?.name ?? "product image"}
+                        width={100}
+                        height={100}
+                        className="w-20 h-20 rounded-md object-cover border border-shop_dark_green/10"
+                      />
                     )}
                     <div className="flex-1">
                       <div className="flex items-start justify-between gap-3">
-                        <Link
-                          href={`/product/${product?.slug?.current}`}
-                          onClick={onClose}
-                          className="font-semibold text-darkColor hover:text-shop_dark_green hoverEffect line-clamp-2"
-                        >
+                        <p className="font-semibold text-darkColor line-clamp-2">
                           {product?.name}
-                        </Link>
+                        </p>
                         <PriceView
                           price={product?.price}
                           discount={product?.discount}
@@ -186,6 +195,8 @@ const ProductSearchbar = ({ open, onClose }: Props) => {
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 const ProductNameList = ({
