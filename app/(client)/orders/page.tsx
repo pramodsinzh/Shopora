@@ -58,5 +58,5 @@ const ordersPage = async () => {
         </Container>
     )
 }
-
+export const dynamic = "force-dynamic"
 export default ordersPage
