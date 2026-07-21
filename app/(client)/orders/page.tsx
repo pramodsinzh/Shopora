@@ -10,6 +10,9 @@ import { FileX } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+
+export const dynamic = "force-dynamic"
+
 const ordersPage = async () => {
     const { userId } = await auth()
     if (!userId) {
@@ -58,5 +61,5 @@ const ordersPage = async () => {
         </Container>
     )
 }
-export const dynamic = "force-dynamic"
+
 export default ordersPage
