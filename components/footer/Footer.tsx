@@ -1,13 +1,13 @@
-import React from 'react'
-import Container from './Container'
-import FooterTop from './FooterTop'
-import Logo from './Logo'
-import SocialMedia from './SocialMedia'
-import { SubText, SubTitle } from './ui/text'
+ 
 import { categoriesData, quickLinksData } from '@/constants/data'
-import Link from 'next/link'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
+import Link from 'next/link' 
+import Container from '../Container'
+import FooterTop from './FooterTop'
+import { SubText, SubTitle } from '../ui/text'
+import { Input } from '../ui/input'
+import { Button } from '../ui/button'
+import Logo from '../Logo'
+import SocialMedia from '../SocialMedia'
 
 const Footer = () => {
   return (

@@ -1,5 +1,5 @@
 
-import { Title } from './ui/text'
+import { Title } from '../ui/text'
 import { getLatestBlogs } from '@/sanity/queries'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'

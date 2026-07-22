@@ -1,5 +1,5 @@
 import NoAccess from '@/components/NoAccess'
-import WishListProducts from '@/components/WishListProducts'
+import WishListProducts from '@/components/wishlist/WishListProducts'
 import { currentUser } from '@clerk/nextjs/server'
 
 const WishListPage = async () => {

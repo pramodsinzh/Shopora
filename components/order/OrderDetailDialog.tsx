@@ -1,12 +1,12 @@
 import { MY_ORDERS_QUERY_RESULT } from '@/sanity.types'
 import React from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog'
-import { Button } from './ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog'
+import { Button } from '../ui/button'
 import Link from 'next/link'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
-import PriceFormatter from './PriceFormatter'
+import PriceFormatter from '../PriceFormatter'
 
 
 interface OrderDetailDialogProps {

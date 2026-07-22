@@ -2,9 +2,9 @@
 
 import { MY_ORDERS_QUERY_RESULT } from '@/sanity.types'
 import { format } from "date-fns"
-import { TableBody, TableCell, TableRow } from './ui/table'
-import { Tooltip, TooltipProvider, TooltipTrigger } from './ui/tooltip'
-import PriceFormatter from './PriceFormatter'
+import { TableBody, TableCell, TableRow } from '../ui/table'
+import { Tooltip, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
+import PriceFormatter from '../PriceFormatter'
 import { X } from 'lucide-react'
 import { useState } from 'react'
 import OrderDetailDialog from './OrderDetailDialog' 

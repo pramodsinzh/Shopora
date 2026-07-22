@@ -1,6 +1,5 @@
 import { productType } from '@/constants/data'
-import Link from 'next/link'
-import React from 'react'
+import Link from 'next/link' 
 
 interface Props {
     selectedTab: string;

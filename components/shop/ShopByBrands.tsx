@@ -1,5 +1,4 @@
-import React from 'react'
-import { Title } from './ui/text'
+ import { Title } from '../ui/text'
 import Link from 'next/link'
 import { getAllBrands } from '@/sanity/queries'
 import Image from 'next/image'

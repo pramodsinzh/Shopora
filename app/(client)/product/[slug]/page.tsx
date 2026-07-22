@@ -1,10 +1,8 @@
-import AddToCartButton from '@/components/AddToCartButton';
 import Container from '@/components/Container';
-import FavoriteButton from '@/components/FavoriteButton';
+import FavoriteButton from '@/components/wishlist/FavoriteButton';
 import ImageView from '@/components/ImageView';
-import PriceView from '@/components/PriceView';
-import ProductCharacteristics from '@/components/ProductCharacteristics';
-import ProductTabs from '@/components/ProductTabs';
+import PriceView from '@/components/PriceView'; 
+import ProductTabs from '@/components/product/ProductTabs';
 import { getBrand, getProductBySlug } from '@/sanity/queries';
 import { CornerDownLeft, StarIcon, Truck } from 'lucide-react';
 import { RxBorderSplit } from 'react-icons/rx'
@@ -12,6 +10,8 @@ import { FiShare2 } from 'react-icons/fi'
 import { FaRegQuestionCircle } from 'react-icons/fa'
 import { TbTruckDelivery } from 'react-icons/tb'
 import { notFound } from 'next/navigation';
+import AddToCartButton from '@/components/cart/AddToCartButton';
+import ProductCharacteristics from '@/components/product/ProductCharacteristics';
 
 
 const SingleProductPage = async ({ params }: { params: Promise<{ slug: string }> }) => {

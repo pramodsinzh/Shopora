@@ -4,14 +4,14 @@ import useStore from "@/store"
 import { ArrowRight, Heart, HeartCrack, HeartHandshake, HeartOff, X } from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
-import Container from "./Container"
+import Container from "../Container"
 import { Product } from "@/sanity.types"
 import toast from "react-hot-toast"
 import Image from "next/image"
 import { urlFor } from "@/sanity/lib/image"
-import PriceFormatter from "./PriceFormatter"
-import AddToCartButton from "./AddToCartButton"
-import { Button } from "./ui/button"
+import PriceFormatter from "../PriceFormatter" 
+import { Button } from "../ui/button"
+import AddToCartButton from "../cart/AddToCartButton"
 
 const WishListProducts = () => {
     const [visibleProducts, setVisibleProducts] = useState(7)

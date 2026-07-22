@@ -9,10 +9,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import PriceFormatter from "./PriceFormatter";
-import PriceView from "./PriceView";
-import QuantityButtons from "./QuantityButtons";
-import Logo from "./Logo";
+import PriceFormatter from "../PriceFormatter";
+import PriceView from "../PriceView";
+import QuantityButtons from "../QuantityButtons";
+import Logo from "../Logo";
 
 interface Props {
   open: boolean;

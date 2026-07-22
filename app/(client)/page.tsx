@@ -1,11 +1,11 @@
-import Container from '@/components/Container'
-import HomeBanner from '@/components/HomeBanner'
-import HomeCategories from '@/components/HomeCategories'
-import ProductGrid from '@/components/ProductGrid'
-import ShopByBrands from '@/components/ShopByBrands'
+import Container from '@/components/Container' 
 import { getCategories } from '@/sanity/queries'
-import { Category } from '@/sanity.types'
-import LatestBlog from '@/components/LatestBlog'
+import { Category } from '@/sanity.types' 
+import HomeBanner from '@/components/home/HomeBanner'
+import ProductGrid from '@/components/product/ProductGrid'
+import HomeCategories from '@/components/home/HomeCategories'
+import ShopByBrands from '@/components/shop/ShopByBrands'
+import LatestBlog from '@/components/blog/LatestBlog'
 
 type CategoryWithCount = Category & { productCount: number }
 

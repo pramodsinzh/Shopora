@@ -1,9 +1,9 @@
 "use client"
 
 import { createCheckoutSession, Metadata } from "@/actions/checkoutSession"
-import AddToWishListButton from "@/components/AddToWishListButton"
+import AddToWishListButton from "@/components/wishlist/AddToWishListButton"
 import Container from "@/components/Container"
-import EmptyCart from "@/components/EmptyCart"
+import EmptyCart from "@/components/cart/EmptyCart"
 import NoAccess from "@/components/NoAccess"
 import PriceFormatter from "@/components/PriceFormatter"
 import QuantityButtons from "@/components/QuantityButtons"

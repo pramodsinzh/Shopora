@@ -1,13 +1,13 @@
 "use client"
 
 import { Product } from '@/sanity.types'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import { ShoppingBag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import useStore from '@/store'
-import toast from 'react-hot-toast'
-import PriceFormatter from './PriceFormatter'
-import QuantityButtons from './QuantityButtons'
+import toast from 'react-hot-toast' 
+import QuantityButtons from '../QuantityButtons'
+import PriceFormatter from '../PriceFormatter'
 
 interface Props {
   product: Product

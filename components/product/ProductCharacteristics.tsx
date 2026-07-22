@@ -1,6 +1,6 @@
 import { Product } from '@/sanity.types' 
 import { getBrand } from '@/sanity/queries' 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
 
 const ProductCharacteristics = async ({ product }: { product: Product | null | undefined }) => {
   const brand = await getBrand(product?.slug?.current as string) 

@@ -1,8 +1,7 @@
 "use client"
 import { headerData } from '@/constants/data'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React from 'react'
+import { usePathname } from 'next/navigation' 
 
 const HeaderMenu = () => {
     const pathname = usePathname();

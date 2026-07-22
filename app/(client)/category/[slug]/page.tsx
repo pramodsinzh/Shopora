@@ -1,5 +1,5 @@
-import CategoryProducts from '@/components/CategoryProducts'
 import Container from '@/components/Container'
+import CategoryProducts from '@/components/product/CategoryProducts'
 import { SubTitle } from '@/components/ui/text'
 import { Category } from '@/sanity.types'
 import { getCategories } from '@/sanity/queries'  

@@ -1,5 +1,5 @@
 import Container from '@/components/Container'
-import ProductCard from '@/components/ProductCard'
+import ProductCard from '@/components/product/ProductCard'
 import { SubTitle } from '@/components/ui/text'
 import { getDealProducts } from '@/sanity/queries' 
 

@@ -3,10 +3,10 @@ import { urlFor } from '@/sanity/lib/image'
 import { Flame, StarIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link' 
-import AddToWishListButton from './AddToWishListButton'
-import { SubTitle } from './ui/text'
-import PriceView from './PriceView'
-import AddToCartButton from './AddToCartButton'
+import AddToWishListButton from '../wishlist/AddToWishListButton'
+import { SubTitle } from '../ui/text'
+import PriceView from '../PriceView' 
+import AddToCartButton from '../cart/AddToCartButton'
 
 const ProductCard = ({ product }: { product: Product }) => {
     return (

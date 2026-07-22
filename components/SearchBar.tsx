@@ -2,7 +2,7 @@
 
 import { Search } from "lucide-react";
 import { useState } from "react"; // ⚠️ import the component, not the page route
-import ProductSearchbar from "./ProductSearchbar";
+import ProductSearchbar from "./product/ProductSearchbar";
 
 const SearchBar = () => {
   const [open, setOpen] = useState(false);

@@ -1,17 +1,17 @@
 "use client"
 
 import { BRANDS_QUERY_RESULT, Category, Product } from '@/sanity.types'
-import Container from './Container'
-import { SubTitle } from './ui/text'
-import CategoryList from './shop/CategoryList'
+import Container from '../Container'
+import { SubTitle } from '../ui/text'
+import CategoryList from '../shop/CategoryList'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import BrandList from './shop/BrandList'
-import PriceList from './shop/PriceList'
+import BrandList from '../shop/BrandList'
+import PriceList from '../shop/PriceList'
 import { client } from '@/sanity/lib/client'
 import { Loader2 } from 'lucide-react'
-import NoProductAvailable from './NoProductAvailable'
-import ProductCard from './ProductCard'
+import NoProductAvailable from '../product/NoProductAvailable'
+import ProductCard from '../product/ProductCard'
 
 
 interface Props {

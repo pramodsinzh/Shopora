@@ -1,13 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import HomeTabBar from "./HomeTabBar";
+import HomeTabBar from "../home/HomeTabBar";
 import { productType } from "@/constants/data";
 import { client } from "@/sanity/lib/client";
 import { Loader2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import NoProductAvailable from "./NoProductAvailable";
-import ProductCard from "./ProductCard";
+import NoProductAvailable from "../product/NoProductAvailable";
+import ProductCard from "../product/ProductCard";
 import { Product } from "@/sanity.types";
 
 

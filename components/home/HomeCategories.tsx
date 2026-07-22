@@ -1,5 +1,5 @@
 import React from 'react'
-import { Title } from './ui/text'
+import { Title } from '../ui/text'
 import { Category } from '@/sanity.types'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
