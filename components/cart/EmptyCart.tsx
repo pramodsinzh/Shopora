@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { ShoppingCart } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import emptyCartImage from '../images/emptyCart.png'
+import { emptyCart as emptyCartImage } from '@/images'
 
 const EmptyCart = () => {
     return (
