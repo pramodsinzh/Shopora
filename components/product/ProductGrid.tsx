@@ -16,14 +16,19 @@ const ProductGrid = () => {
     const [loading, setLoading] = useState(false);
     const [selectedTab, setSelectedTab] = useState(productType[0]?.title || "")
 
-    const query = `*[_type == "product" && varient == $varient] | order(name desc){
-    ..., "categories":categories[]->title}`
-    const params = { varient: selectedTab.toLowerCase() }
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
             try {
-                const response = await client.fetch(query, params)
+                const query = `*[_type == "product" && varient == $varient] | order(_createdAt desc){
+                ..., "categories":categories[]->title}`
+                const params = { varient: selectedTab.toLowerCase() }
+
+                const response = await client.fetch(
+                    query,
+                    params,
+                    { next: { revalidate: 0 } }
+                )
                 setProducts(response)
             } catch (error) {
                 console.error("Error fetching products:", error)
@@ -33,6 +38,7 @@ const ProductGrid = () => {
         }
         fetchData()
     }, [selectedTab])
+
     return (
         <div>
             <HomeTabBar selectedTab={selectedTab} onTabSelect={setSelectedTab} />
