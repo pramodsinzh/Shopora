@@ -28,21 +28,26 @@ const ProductCard = ({ product }: { product: Product }) => {
                 )}
                 <AddToWishListButton product={product} />
                 {product?.status === "sale" && (
-                    <p className='absolute top-2 left-2 z-10 text-xs border border-darkColor/50 px-2 rounded-full group-hover:border-shop_light_green group-hover:text-shop_light_green hoverEffect'>Sale!</p>
+                    <p className='absolute top-2 left-2 z-10 text-xs font-medium bg-white/90 text-darkColor border border-darkColor/20 shadow-sm px-2 py-1 rounded-full group-hover:border-shop_light_green group-hover:text-shop_light_green hoverEffect'>
+                        Sale!
+                    </p>
                 )}
                 {product?.status === "new" && (
-                    <p className='absolute top-2 left-2 z-10 text-xs border border-darkColor/50 px-2 rounded-full group-hover:border-shop_light_green group-hover:text-shop_light_green hoverEffect'>New Arrival </p>
+                    <p className='absolute top-2 left-2 z-10 text-xs font-medium bg-white/90 text-darkColor border border-darkColor/20 shadow-sm px-2 py-1 rounded-full group-hover:border-shop_light_green group-hover:text-shop_light_green hoverEffect'>
+                        New Arrival
+                    </p>
                 )}
-                {product?.status === "hot" && <Link
-                    href={"/deal"}
-                    className="absolute top-2 left-2 z-10 text-xs border border-shop_orange/50 p-1 rounded-full group-hover:border-shop_orange hover:text-shop_dark_green hoverEffect"
-                >
-                    <Flame
-                        size={18}
-                        fill="#fb6c08"
-                        className="text-shop_orange/50 group-hover:text-shop_orange hoverEffect" />
-
-                </Link>}
+                {product?.status === "hot" && (
+                    <Link
+                        href={"/deal"}
+                        className="absolute top-2 left-2 z-10 text-xs bg-white/90 border border-shop_orange/50 shadow-sm p-1.5 rounded-full group-hover:border-shop_orange hover:text-shop_dark_green hoverEffect"
+                    >
+                        <Flame
+                            size={18}
+                            fill="#fb6c08"
+                            className="text-shop_orange/50 group-hover:text-shop_orange hoverEffect" />
+                    </Link>
+                )}
             </div>
             <div className="p-2.5 sm:p-3 flex flex-col gap-1.5 sm:gap-2 flex-1">
                 {product?.categories && (

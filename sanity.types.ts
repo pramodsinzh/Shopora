@@ -747,16 +747,52 @@ export type MY_ORDERS_QUERY_RESULT = Array<{
   orderDate?: string;
 }>;
 
-// Source: sanity/queries/search.ts
-// Variable: ALL_PRODUCTS_SEARCH_QUERY
-// Query: *[_type == "product" && defined(slug.current)]{    _id,    title,    "slug": slug.current,    image,    price,    discount  }
-export type ALL_PRODUCTS_SEARCH_QUERY_RESULT = Array<{
+// Source: sanity/queries/query.ts
+// Variable: BRAND_BY_SLUG_QUERY
+// Query: *[_type == "brand" && slug.current == $slug][0]{    _id,    title,    slug,    description,    image,    "productCount": count(*[_type == "product" && references(^._id)])  }
+export type BRAND_BY_SLUG_QUERY_RESULT = {
   _id: string;
-  title: null;
-  slug: string | null;
-  image: null;
-  price: number | null;
-  discount: number | null;
+  title: string | null;
+  slug: Slug | null;
+  description: string | null;
+  image: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  productCount: number;
+} | null;
+
+// Source: sanity/queries/query.ts
+// Variable: PRODUCTS_BY_BRAND_QUERY
+// Query: *[_type == "product" && references(*[_type == "brand" && slug.current == $slug]._id)] | order(name asc){    ...,    "categories": categories[]->title  }
+export type PRODUCTS_BY_BRAND_QUERY_RESULT = Array<{
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  images?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+  description?: string;
+  price?: number;
+  discount?: number;
+  categories: Array<string | null> | null;
+  stock?: number;
+  brand?: BrandReference;
+  status?: "hot" | "new" | "sale";
+  varient?: "appliances" | "gadget" | "others" | "refrigerators";
+  isFatured?: boolean;
 }>;
 
 // Query TypeMap
@@ -773,6 +809,7 @@ declare module "@sanity/client" {
     '*[_type == "product" && slug.current == $slug] | order(name asc) [0]': PRODUCT_BY_SLUG_QUERY_RESULT;
     '*[_type == "product" && slug.current == $slug ] | order(name asc) {\n      "brandName"  : brand -> title\n    } ': BRAND_QUERY_RESULT;
     '*[_type == "order" && clerkUserId == $userId] | order(orderDate desc){\n    ...,\n    products[]{\n      ...,\n      product->\n    }\n  }': MY_ORDERS_QUERY_RESULT;
-    '*[_type == "product" && defined(slug.current)]{\n    _id,\n    title,\n    "slug": slug.current,\n    image,\n    price,\n    discount\n  }': ALL_PRODUCTS_SEARCH_QUERY_RESULT;
+    '*[_type == "brand" && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    description,\n    image,\n    "productCount": count(*[_type == "product" && references(^._id)])\n  }': BRAND_BY_SLUG_QUERY_RESULT;
+    '*[_type == "product" && references(*[_type == "brand" && slug.current == $slug]._id)] | order(name asc){\n    ...,\n    "categories": categories[]->title\n  }': PRODUCTS_BY_BRAND_QUERY_RESULT;
   }
 }
